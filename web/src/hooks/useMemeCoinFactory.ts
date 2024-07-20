@@ -18,7 +18,7 @@ export default function useMemeCoinFactory({
   ethAmount,
 }: {
   arguments: (number | string)[];
-  ethAmount: string;
+  ethAmount: bigint;
 }) {
   const [transactionState, setTransactionState] = useState<TransactionStates | null>(null);
   const { address } = useAccount();
@@ -29,7 +29,7 @@ export default function useMemeCoinFactory({
     abi: MemeCoinFactory.abi,
     functionName: 'createMemeCoin',
     args,
-    value: parseEther(ethAmount),
+    value: ethAmount,
   });
 
   const {

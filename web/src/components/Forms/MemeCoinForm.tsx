@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAccount } from 'wagmi';
 import useMemeCoinFactory from '@/hooks/useMemeCoinFactory';
+import { parseEther } from 'viem';
 
 export default function MemeCoinForm() {
   const [name, setName] = useState('');
@@ -15,8 +16,8 @@ export default function MemeCoinForm() {
   const isValid = name && symbol && description && imageURL && initialSupply && ethAmount;
 
   const { disabled, transactionState, onSubmitTransaction } = useMemeCoinFactory({
-    arguments: [name, symbol, description, imageURL, initialSupply],
-    ethAmount
+    arguments: [name, symbol, description, imageURL, parseEther(initialSupply).toString()],
+    ethAmount: parseEther(ethAmount)
   });
 
   console.log('transactionState', transactionState);
