@@ -1,5 +1,29 @@
+'use client';
+
+import MemeCoinForm from '@/components/Forms/MemeCoinForm';
+import { useAccount, useConnect, useWriteContract } from 'wagmi';
 export default function HomePage() {
-  return <></>
+  // check if user is connected
+  const { isConnected, address, chainId } = useAccount();
+  // connectors
+  const { connect, connectors, error } = useConnect();
+
+  return <>
+    <div>
+      {connectors.map((connector) => (
+        <button key={connector.id} onClick={() => connect({ connector })}>
+          {connector.name}
+        </button>
+      ))}
+      {error && <div>{error.message}</div>}
+      {isConnected && <div>Connected</div>}
+      {address && <div>Address: {address}</div>}
+      {chainId && <div>Connected Chain ID: {chainId}</div>}
+    </div>
+    <div>
+      <MemeCoinForm />
+    </div>
+  </>;
 }
 
 // 'use client';
