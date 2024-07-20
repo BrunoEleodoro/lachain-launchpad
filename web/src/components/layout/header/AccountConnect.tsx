@@ -12,7 +12,7 @@ import { AccountInfoPanel } from './AccountInfoPanel';
  */
 function AccountConnect() {
   const account = useAccount();
-  const { status } = useConnect();
+  const { connectors, status, connect } = useConnect();
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
 
@@ -30,7 +30,21 @@ function AccountConnect() {
     >
       {(() => {
         if (account.status === 'disconnected') {
-          return <ConnectAccount />;
+          return (
+            <div>
+              {connectors.map((connector) => (
+                <><button
+                  key={connector.id}
+                  onClick={() => connect({ connector })}
+                  type="button"
+                >
+                  Connect with {connector.name}
+                </button>
+                <br/>
+                </>
+              ))}
+            </div>
+          );
         }
 
         if (account.status === 'connected' && chainId !== baseSepolia.id) {
