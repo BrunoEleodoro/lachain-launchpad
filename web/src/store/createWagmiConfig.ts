@@ -14,22 +14,37 @@ export function createWagmiConfig(rpcUrl: string, projectId?: string) {
   const baseUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base/');
   const baseSepoliaUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base-sepolia/');
 
-  return createConfig(
-    getDefaultConfig({
-      // Your dApps chains
-      chains: [lachain],
-      transports: {
-        // RPC URL for each chain
-        [lachain.id]: http(lachain.rpcUrls.default.http[0]),
-      },
-      // Required API Keys
-      walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
+  // return createConfig(
+  //   getDefaultConfig({
+  //     // Your dApps chains
+  //     chains: [lachain],
+  //     transports: {
+  //       // RPC URL for each chain
+  //       [lachain.id]: http(lachain.rpcUrls.default.http[0]),
+  //     },
+  //     // Required API Keys
+  //     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
 
-      // Required App Info
-      appName: 'Lachain Launchpad',
+  //     // Required App Info
+  //     appName: 'Lachain Launchpad',
 
-      // Optional App Info
-      appDescription: 'Lachain Launchpad',
-    }),
-  );
+  //     // Optional App Info
+  //     appDescription: 'Lachain Launchpad',
+  //   }),
+  // );
+  return createConfig({
+    chains: [lachain, baseSepolia],
+    connectors: [
+     
+      coinbaseWallet({
+        appName: 'lachain-launchpad',
+      }),
+    ],
+    ssr: true,
+    transports: {
+      [baseSepolia.id]: http(baseSepoliaUrl),
+      [base.id]: http(baseUrl),
+      [lachain.id]: http(lachain.rpcUrls.default.http[0]),
+    },
+  });
 }

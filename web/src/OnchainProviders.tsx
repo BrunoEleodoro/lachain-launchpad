@@ -20,14 +20,12 @@ const wagmiConfig = createWagmiConfig(rpcUrl);
 function OnchainProviders({ children }: Props) {
   return (
     <WagmiProvider config={wagmiConfig}>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <OnchainKitProvider chain={lachain}>
-          <ConnectKitProvider options={{}}>
-            {children}
-          </ConnectKitProvider>
-        </OnchainKitProvider>
-      </QueryClientProvider>
-    </WagmiProvider>
+        <ConnectKitProvider>{children}</ConnectKitProvider>
+      </OnchainKitProvider>
+    </QueryClientProvider>
+  </WagmiProvider>
   );
 }
 
