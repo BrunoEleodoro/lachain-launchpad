@@ -42,7 +42,7 @@ body {
   background-image: url('./images/background.svg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  /* background-repeat: n; */
   color: var(--boat-color-text);
   font-family: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;

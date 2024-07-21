@@ -21,7 +21,9 @@ function OnchainProviders({ children }: Props) {
   return (
     <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider options={{}}>{children}</ConnectKitProvider>
+        <ConnectKitProvider options={{}}>
+          <OnchainKitProvider chain={lachain}>{children}</OnchainKitProvider>
+        </ConnectKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
