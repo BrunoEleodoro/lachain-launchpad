@@ -17,8 +17,7 @@ export function createWagmiConfig(rpcUrl: string, projectId?: string) {
     chains: [lachain, baseSepolia],
     connectors: [
       coinbaseWallet({
-        appName: 'buildonchainapps',
-        preference: 'smartWalletOnly',
+        appName: 'lachain-launchpad',
       }),
     ],
     ssr: true,
