@@ -36,19 +36,22 @@ html {
     'Liberation Mono', 'Courier New', monospace;
 }
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
   /* background-color: var(--boat-color-background); */
   background-image: url('./images/background.svg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   color: var(--boat-color-text);
   font-family: 'Space Grotesk', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     'Liberation Mono', 'Courier New', monospace;
   overflow-x: hidden;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 a {

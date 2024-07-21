@@ -19,67 +19,33 @@ export default function HomePage() {
   console.log(memeCoinList);
   return (
     <>
-      <div className="mx-auto min-h-screen max-w-screen-xl text-white">
-        <header className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-4">
-            {/* <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="h-8 w-8"
-            >
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-              <polyline points="10 17 15 12 10 7"></polyline>
-              <line x1="15" x2="3" y1="12" y2="12"></line>
-            </svg> */}
-            <nav className="flex space-x-4">
-              {/* <a className="text-sm" href="#" rel="ugc">
-                [twitter]
-              </a>
-              <a className="text-sm" href="#" rel="ugc">
-                [support]
-              </a>
-              <a className="text-sm" href="#" rel="ugc">
-                [telegram]
-              </a>
-              <a className="text-sm" href="#" rel="ugc">
-                [how it works]
-              </a> */}
-            </nav>
-          </div>
-          <div className="flex items-center space-x-2">
-            <ConnectKitButton />
-            {/* <button className="ring-offset-background focus-visible:ring-ring bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-              Connect Wallet
-            </button> */}
-          </div>
-        </header>
-        <main className="flex flex-col space-y-12 p-16">
+      <div className=" min-h-screen max-w-screen-xl text-white">
+        <main className="flex flex-col space-y-12 p-6 md:p-16">
           <div className="flex flex-col justify-between md:flex-row">
             <div className="flex flex-col items-center justify-center space-y-4 text-start md:items-start">
               <h1 className="text-6xl font-bold">$CARAMEL</h1>
               <p className="max-w-xl">
-                Caramel all meme coins and their communities together and change the memeverse with
-                the Caramel street dog. Love it, build it.
+                {/* description for the launchpad for memecoins */}
+                Caramel is a launchpad for meme coins on LAChain. We are a community of meme coin enthusiasts
+                and we love to build and love meme coins.
               </p>
-              <button
-                className="rounded-full bg-gradient-to-r from-[#0DA7FE] to-[#FE44CA] px-4 py-2 text-white transition-opacity duration-300 hover:opacity-80"
-                onClick={() => router.push('/create')}
-              >
-                Create a Coin
-              </button>
+              <div className="flex gap-4">
+                <div className="flex items-center space-x-2">
+                  <ConnectKitButton theme="rounded" />
+                </div>
+                <button
+                  className="rounded-full bg-gradient-to-r from-[#0DA7FE] to-[#FE44CA] px-4 py-2 text-white transition-opacity duration-300 hover:opacity-80"
+                  onClick={() => router.push('/create')}
+                >
+                  Create a Coin
+                </button>
+              </div>
             </div>
             <div className="flex items-center justify-center">
               <img
                 src={dog.src}
                 alt="Caramel Dog"
-                className="h-[400px] w-[400px]"
+                className="md:h-[400px] md:w-[400px]"
                 width="300"
                 height="300"
                 style={{ aspectRatio: '400 / 400', objectFit: 'cover' }}
@@ -99,7 +65,7 @@ export default function HomePage() {
                       <img
                         src={memecoin.imageURL}
                         alt="Coin"
-                        className="h-[200px] w-[200px]"
+                        className="h-[200px] w-[200px] rounded-lg"
                         width="200"
                         height="200"
                         style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
@@ -110,10 +76,8 @@ export default function HomePage() {
                     </div>
                     <div className="flex flex-col items-center space-y-2 p-6">
                       <div className="flex items-center space-x-2">
-                        <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                          <img className="aspect-square h-full w-full" src={memecoin.imageURL} />
-                        </span>
-                        {/* <div className="text-sm">Owned By Esthephen</div> */}
+                        
+                        <div className="text-sm">{memecoin.description}</div>
                       </div>
                       {/* <div className="text-sm">Current Bid 0.28 SOL</div> */}
                       <div className="flex space-x-2">
@@ -145,58 +109,6 @@ export default function HomePage() {
           </a>
         </footer>
       </div>
-      {/* <div>
-      {connectors.map((connector) => (
-        <button key={connector.id} onClick={() => connect({ connector })}>
-          {connector.name}
-        </button>
-      ))}
-      {error && <div>{error.message}</div>}
-      {isConnected && <div>Connected</div>}
-      {address && <div>Address: {address}</div>}
-      {chainId && <div>Connected Chain ID: {chainId}</div>}
-    </div>
-    <div>
-      <MemeCoinForm />
-    </div> */}
     </>
   );
 }
-
-// 'use client';
-// import { useAccount } from 'wagmi';
-// import Footer from '@/components/layout/footer/Footer';
-// import Header from '@/components/layout/header/Header';
-
-// /**
-//  * Use the page component to wrap the components
-//  * that you want to render on the page.
-//  */
-// export default function HomePage() {
-//   const account = useAccount();
-
-//   return (
-//     <>
-//       <Header />
-//       <main className="container mx-auto flex flex-col px-8 py-16">
-//         <div>
-//           <h2 className="text-xl">Developer information</h2>
-//           <br />
-//           <h3 className="text-lg">Account</h3>
-//           <ul>
-//             <li>
-//               <b>status</b>: {account.status}
-//             </li>
-//             <li>
-//               <b>addresses</b>: {JSON.stringify(account.addresses)}
-//             </li>
-//             <li>
-//               <b>chainId</b>: {account.chainId}
-//             </li>
-//           </ul>
-//         </div>
-//       </main>
-//       <Footer />
-//     </>
-//   );
-// }
