@@ -3,7 +3,6 @@ import './global.css';
 import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import OnchainProviders from '@/OnchainProviders';
 import { initAnalytics } from '@/utils/analytics';
-import { inter } from './fonts';
 import type { Metadata } from 'next';
 
 export const viewport = {
@@ -27,7 +26,7 @@ initAnalytics();
  */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.className}`}>
+    <html lang="en">
       <body className="flex flex-1 flex-col">
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

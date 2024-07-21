@@ -1,6 +1,6 @@
 import { createConfig, http } from 'wagmi';
 import { base, baseSepolia } from 'wagmi/chains';
-import { coinbaseWallet } from 'wagmi/connectors';
+import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 import { lachain } from '@/constants';
 
 export function createWagmiConfig(rpcUrl: string, projectId?: string) {
@@ -16,6 +16,9 @@ export function createWagmiConfig(rpcUrl: string, projectId?: string) {
   return createConfig({
     chains: [lachain, baseSepolia],
     connectors: [
+      walletConnect({
+        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
+      }),
       coinbaseWallet({
         appName: 'lachain-launchpad',
       }),
