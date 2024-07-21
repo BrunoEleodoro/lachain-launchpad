@@ -3,14 +3,17 @@
 import MemeCoinForm from '@/components/Forms/MemeCoinForm';
 import { useAccount, useConnect, useWriteContract } from 'wagmi';
 import dog from '../images/dog.png';
-import { ConnectKitButton } from 'connectkit';
+import { ConnectKitButton, ConnectKitProvider } from 'connectkit';
+import { useRouter } from "next/navigation";
+
 
 export default function HomePage() {
   // check if user is connected
   const { isConnected, address, chainId } = useAccount();
   // connectors
   const { connect, connectors, error } = useConnect();
-
+  
+  const router = useRouter();
   return (
     <>
       <div className="min-h-screen  text-white">
@@ -48,7 +51,7 @@ export default function HomePage() {
             </nav>
           </div>
           <div className="flex items-center space-x-2">
-            <ConnectKitButton/>
+            <ConnectKitButton />
             {/* <button className="ring-offset-background focus-visible:ring-ring bg-secondary text-secondary-foreground hover:bg-secondary/80 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
               Connect Wallet
             </button> */}
@@ -62,7 +65,10 @@ export default function HomePage() {
                 Caramel all meme coins and their communities together and change the memeverse with
                 the Caramel street dog. Love it, build it.
               </p>
-              <button className="rounded-full bg-gradient-to-r from-[#0DA7FE] to-[#FE44CA] px-4 py-2 text-white hover:opacity-80 transition-opacity duration-300">
+              <button
+                className="rounded-full bg-gradient-to-r from-[#0DA7FE] to-[#FE44CA] px-4 py-2 text-white transition-opacity duration-300 hover:opacity-80"
+                onClick={() => router.push('/create')}
+              >
                 Create a Coin
               </button>
             </div>
@@ -77,7 +83,7 @@ export default function HomePage() {
               />
             </div>
           </div>
-          <div className="w-full text-start pt-12">
+          <div className="w-full pt-12 text-start">
             <h2 className="text-4xl font-bold">Top 4 Coin in this Week</h2>
             <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
               <div

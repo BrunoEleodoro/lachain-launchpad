@@ -97,7 +97,8 @@ export default function useMemeCoinFactory({
       transactionState,
       resetContractForms,
       onSubmitTransaction,
+      errors: error,
     }),
-    [onSubmitTransaction, transactionState, disabled, resetContractForms],
+    [onSubmitTransaction, transactionState, disabled, resetContractForms, error],
   );
 }

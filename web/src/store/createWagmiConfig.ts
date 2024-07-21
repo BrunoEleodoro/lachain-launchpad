@@ -1,7 +1,8 @@
 import { createConfig, http } from 'wagmi';
-import { base, baseSepolia } from 'wagmi/chains';
+import { base, baseSepolia, mainnet } from 'wagmi/chains';
 import { coinbaseWallet, injected, walletConnect } from 'wagmi/connectors';
 import { lachain } from '@/constants';
+import { getDefaultConfig } from 'connectkit';
 
 export function createWagmiConfig(rpcUrl: string, projectId?: string) {
   // Keep this till we fully deprecated RK inside the template
@@ -13,21 +14,22 @@ export function createWagmiConfig(rpcUrl: string, projectId?: string) {
   const baseUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base/');
   const baseSepoliaUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base-sepolia/');
 
-  return createConfig({
-    chains: [lachain, baseSepolia],
-    connectors: [
-      walletConnect({
-        projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID || '',
-      }),
-      coinbaseWallet({
-        appName: 'lachain-launchpad',
-      }),
-    ],
-    ssr: true,
-    transports: {
-      [baseSepolia.id]: http(baseSepoliaUrl),
-      [base.id]: http(baseUrl),
-      [lachain.id]: http(lachain.rpcUrls.default.http[0]),
-    },
-  });
+  return createConfig(
+    getDefaultConfig({
+      // Your dApps chains
+      chains: [lachain],
+      transports: {
+        // RPC URL for each chain
+        [lachain.id]: http(lachain.rpcUrls.default.http[0]),
+      },
+      // Required API Keys
+      walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
+
+      // Required App Info
+      appName: 'Lachain Launchpad',
+
+      // Optional App Info
+      appDescription: 'Lachain Launchpad',
+    }),
+  );
 }
