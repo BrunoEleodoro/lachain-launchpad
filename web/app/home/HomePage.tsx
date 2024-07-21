@@ -4,19 +4,22 @@ import MemeCoinForm from '@/components/Forms/MemeCoinForm';
 import { useAccount, useConnect, useWriteContract } from 'wagmi';
 import dog from '../images/dog.png';
 import { ConnectKitButton, ConnectKitProvider } from 'connectkit';
-import { useRouter } from "next/navigation";
-
+import { useRouter } from 'next/navigation';
+import useMemeCoinList from '@/hooks/useMemeCoinList';
 
 export default function HomePage() {
   // check if user is connected
   const { isConnected, address, chainId } = useAccount();
   // connectors
   const { connect, connectors, error } = useConnect();
-  
+
   const router = useRouter();
+  const memeCoinList = useMemeCoinList();
+
+  console.log(memeCoinList);
   return (
     <>
-      <div className="min-h-screen  text-white">
+      <div className="mx-auto min-h-screen max-w-screen-xl text-white">
         <header className="flex items-center justify-between p-4">
           <div className="flex items-center space-x-4">
             {/* <svg
@@ -58,8 +61,8 @@ export default function HomePage() {
           </div>
         </header>
         <main className="flex flex-col space-y-12 p-16">
-          <div className="flex justify-between">
-            <div className="flex flex-col items-start justify-center space-y-4 text-start">
+          <div className="flex flex-col justify-between md:flex-row">
+            <div className="flex flex-col items-center justify-center space-y-4 text-start md:items-start">
               <h1 className="text-6xl font-bold">$CARAMEL</h1>
               <p className="max-w-xl">
                 Caramel all meme coins and their communities together and change the memeverse with
@@ -84,148 +87,55 @@ export default function HomePage() {
             </div>
           </div>
           <div className="w-full pt-12 text-start">
-            <h2 className="text-4xl font-bold">Top 4 Coin in this Week</h2>
+            <h2 className="text-4xl font-bold">Recently deployed coins</h2>
             <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-              <div
-                className="bg-card text-card-foreground mx-auto w-full max-w-xs rounded-lg border shadow-sm"
-                data-v0-t="card"
-              >
-                <div className="flex flex-col items-center space-y-1.5 p-6">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Coin"
-                    className="h-[200px] w-[200px]"
-                    width="200"
-                    height="200"
-                    style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
-                  />
-                  <h3 className="mt-4 whitespace-nowrap text-lg font-bold tracking-tight">
-                    "BABY INDUSTRY #69"
-                  </h3>
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-6">
-                  <div className="flex items-center space-x-2">
-                    <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                      <img className="aspect-square h-full w-full" src="/placeholder-user.jpg" />
-                    </span>
-                    <div className="text-sm">Owned By Esthephen</div>
+              {memeCoinList.map((memecoin) => {
+                return (
+                  <div
+                    className="bg-card text-card-foreground mx-auto w-full max-w-xs rounded-lg border shadow-sm"
+                    data-v0-t="card"
+                  >
+                    <div className="flex flex-col items-center space-y-1.5 p-6">
+                      <img
+                        src={memecoin.imageURL}
+                        alt="Coin"
+                        className="h-[200px] w-[200px]"
+                        width="200"
+                        height="200"
+                        style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
+                      />
+                      <h3 className="mt-4 whitespace-nowrap text-lg font-bold tracking-tight">
+                        {memecoin.name}
+                      </h3>
+                    </div>
+                    <div className="flex flex-col items-center space-y-2 p-6">
+                      <div className="flex items-center space-x-2">
+                        <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
+                          <img className="aspect-square h-full w-full" src={memecoin.imageURL} />
+                        </span>
+                        {/* <div className="text-sm">Owned By Esthephen</div> */}
+                      </div>
+                      {/* <div className="text-sm">Current Bid 0.28 SOL</div> */}
+                      <div className="flex space-x-2">
+                        {/* <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                          Buy Coin
+                        </button> */}
+                        <button
+                          className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
+                          onClick={() =>
+                            window.open(
+                              `https://sambaswap.xyz/swap?inputCurrency=0x2911a1ab18546cb501628be8625c7503a2a7db54&outputCurrency=${memecoin.address}`,
+                              '_blank',
+                            )
+                          }
+                        >
+                          Buy Coin
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-sm">Current Bid 0.28 SOL</div>
-                  <div className="flex space-x-2">
-                    <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Buy Coin
-                    </button>
-                    <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      View History
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="bg-card text-card-foreground mx-auto w-full max-w-xs rounded-lg border shadow-sm"
-                data-v0-t="card"
-              >
-                <div className="flex flex-col items-center space-y-1.5 p-6">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Coin"
-                    className="h-[200px] w-[200px]"
-                    width="200"
-                    height="200"
-                    style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
-                  />
-                  <h3 className="mt-4 whitespace-nowrap text-lg font-bold tracking-tight">
-                    "BABY INDUSTRY #69"
-                  </h3>
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-6">
-                  <div className="flex items-center space-x-2">
-                    <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                      <img className="aspect-square h-full w-full" src="/placeholder-user.jpg" />
-                    </span>
-                    <div className="text-sm">Owned By Esthephen</div>
-                  </div>
-                  <div className="text-sm">Current Bid 0.28 SOL</div>
-                  <div className="flex space-x-2">
-                    <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Buy Coin
-                    </button>
-                    <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      View History
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="bg-card text-card-foreground mx-auto w-full max-w-xs rounded-lg border shadow-sm"
-                data-v0-t="card"
-              >
-                <div className="flex flex-col items-center space-y-1.5 p-6">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Coin"
-                    className="h-[200px] w-[200px]"
-                    width="200"
-                    height="200"
-                    style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
-                  />
-                  <h3 className="mt-4 whitespace-nowrap text-lg font-bold tracking-tight">
-                    "BABY INDUSTRY #69"
-                  </h3>
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-6">
-                  <div className="flex items-center space-x-2">
-                    <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                      <img className="aspect-square h-full w-full" src="/placeholder-user.jpg" />
-                    </span>
-                    <div className="text-sm">Owned By Esthephen</div>
-                  </div>
-                  <div className="text-sm">Current Bid 0.28 SOL</div>
-                  <div className="flex space-x-2">
-                    <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Buy Coin
-                    </button>
-                    <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      View History
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="bg-card text-card-foreground mx-auto w-full max-w-xs rounded-lg border shadow-sm"
-                data-v0-t="card"
-              >
-                <div className="flex flex-col items-center space-y-1.5 p-6">
-                  <img
-                    src="/placeholder.svg"
-                    alt="Coin"
-                    className="h-[200px] w-[200px]"
-                    width="200"
-                    height="200"
-                    style={{ aspectRatio: '200 / 200', objectFit: 'cover' }}
-                  />
-                  <h3 className="mt-4 whitespace-nowrap text-lg font-bold tracking-tight">
-                    "BABY INDUSTRY #69"
-                  </h3>
-                </div>
-                <div className="flex flex-col items-center space-y-2 p-6">
-                  <div className="flex items-center space-x-2">
-                    <span className="relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full">
-                      <img className="aspect-square h-full w-full" src="/placeholder-user.jpg" />
-                    </span>
-                    <div className="text-sm">Owned By Esthephen</div>
-                  </div>
-                  <div className="text-sm">Current Bid 0.28 SOL</div>
-                  <div className="flex space-x-2">
-                    <button className="ring-offset-background focus-visible:ring-ring bg-primary text-primary-foreground hover:bg-primary/90 inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      Buy Coin
-                    </button>
-                    <button className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
-                      View History
-                    </button>
-                  </div>
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
         </main>
