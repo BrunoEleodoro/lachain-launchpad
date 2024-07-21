@@ -19,7 +19,7 @@ export default function HomePage() {
   console.log(memeCoinList);
   return (
     <>
-      <div className=" min-h-screen max-w-screen-xl text-white">
+      <div className=" min-h-screen max-w-screen-xl text-white self-center">
         <main className="flex flex-col space-y-12 p-6 md:p-16">
           <div className="flex flex-col justify-between md:flex-row">
             <div className="flex flex-col items-center justify-center space-y-4 text-start md:items-start">
