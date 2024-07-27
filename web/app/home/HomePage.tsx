@@ -16,18 +16,40 @@ export default function HomePage() {
   const router = useRouter();
   const memeCoinList = useMemeCoinList();
 
-  console.log(memeCoinList);
+  async function addLachainNetwork() {
+    try {
+      await (window.ethereum as any).request({
+        method: 'wallet_addEthereumChain',
+        params: [
+          {
+            chainId: '0x112',
+            rpcUrls: ['https://rpc1.mainnet.lachain.network'],
+            chainName: 'LaChain',
+            nativeCurrency: {
+              name: 'LAC',
+              symbol: 'LAC',
+              decimals: 18,
+            },
+            blockExplorerUrls: ['https://explorer.lachain.network'],
+          },
+        ],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
-      <div className=" min-h-screen max-w-screen-xl text-white self-center">
+      <div className=" min-h-screen max-w-screen-xl self-center text-white">
         <main className="flex flex-col space-y-12 p-6 md:p-16">
           <div className="flex flex-col justify-between md:flex-row">
             <div className="flex flex-col items-center justify-center space-y-4 text-start md:items-start">
               <h1 className="text-6xl font-bold">$CARAMEL</h1>
               <p className="max-w-xl">
                 {/* description for the launchpad for memecoins */}
-                Caramel is a launchpad for meme coins on LAChain. We are a community of meme coin enthusiasts
-                and we love to build and love meme coins.
+                Caramel is a launchpad for meme coins on LAChain. We are a community of meme coin
+                enthusiasts and we love to build and love meme coins.
               </p>
               <div className="flex gap-4">
                 <div className="flex items-center space-x-2">
@@ -39,6 +61,14 @@ export default function HomePage() {
                 >
                   Create a Coin
                 </button>
+              </div>
+              <div className="flex pointer underline" onClick={addLachainNetwork}>
+                <img
+                  width={'20px'}
+                  src="https://metamask.io/favicon-32x32.png?v=48400a28770e10dd52a8c0e539aeb282"
+                  style={{ marginRight: '8px' }}
+                />{' '}
+                Add LaChain Network
               </div>
             </div>
             <div className="flex items-center justify-center">
@@ -76,7 +106,6 @@ export default function HomePage() {
                     </div>
                     <div className="flex flex-col items-center space-y-2 p-6">
                       <div className="flex items-center space-x-2">
-                        
                         <div className="text-sm">{memecoin.description}</div>
                       </div>
                       {/* <div className="text-sm">Current Bid 0.28 SOL</div> */}
