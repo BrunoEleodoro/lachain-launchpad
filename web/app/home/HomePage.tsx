@@ -117,7 +117,7 @@ export default function HomePage() {
                           className="ring-offset-background focus-visible:ring-ring border-input bg-background hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50"
                           onClick={() =>
                             window.open(
-                              `https://sambaswap.xyz/swap?inputCurrency=0x2911a1ab18546cb501628be8625c7503a2a7db54&outputCurrency=${memecoin.address}`,
+                              `https://sambaswap.xyz/#/swap?inputCurrency=LAC&outputCurrency=${memecoin.address}`,
                               '_blank',
                             )
                           }
